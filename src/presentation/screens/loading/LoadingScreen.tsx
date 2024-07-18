@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 export const LoadingScreen = () => {
   return (
     <View>
-      <Text>LoginScreen</Text>
+      <Text>LoadingScreen</Text>
     </View>
   );
 };
