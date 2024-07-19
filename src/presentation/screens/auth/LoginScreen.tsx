@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable jsx-quotes */
 /* eslint-disable eol-last */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable prettier/prettier */
@@ -6,6 +8,7 @@ import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import { useWindowDimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { globalStyles } from "../../../config/theme/globalStyles";
+import { CustomIcon } from "../../components/ui/CustomIcon";
 
 
 export const LoginScreen = () => {
@@ -23,6 +26,7 @@ export const LoginScreen = () => {
               placeholder="Email"
               keyboardType='email-address'
               autoCapitalize='none'
+              accessoryLeft={<CustomIcon name='email-outline' />}
               style={{marginBottom: 10, width: width * 0.7}}
 
             />
@@ -30,8 +34,8 @@ export const LoginScreen = () => {
               placeholder='Password'
               secureTextEntry
               autoCapitalize='none'
+              accessoryLeft={<CustomIcon name='lock-outline' />}
               style={{marginBottom: 10, width: width * 0.7}}
-
             />
             {/* space */}
             <Layout style={{height: 20}} />
@@ -40,7 +44,7 @@ export const LoginScreen = () => {
             <Layout>
                 <Button
                   onPress={()=>{}}
-                  
+                  accessoryRight={<CustomIcon name='arrow-forward-outline' white/>}
                 >
                   Login
                 </Button>
@@ -50,16 +54,16 @@ export const LoginScreen = () => {
               <Layout style={{height: 20}} />
 
             {/* info to create an account */}
-            <Layout 
+            <Layout
               style={{
                 alignItems:'flex-end',
                 flexDirection:'row',
-                justifyContent:'center'
+                justifyContent:'center',
               }}
             >
               <Text style={{marginRight:5}}>Don't have an account?</Text>
               <Text 
-                status='primary' 
+                status='primary'
                 category='s1'
                 onPress={()=>{}}
                 >Create an account</Text>
