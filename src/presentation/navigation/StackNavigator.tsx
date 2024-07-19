@@ -1,7 +1,7 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable prettier/prettier */
-import { CardStyleInterpolators, createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
+import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { LoadingScreen } from '../screens/loading/LoadingScreen';
