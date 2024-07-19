@@ -75,7 +75,7 @@ export const LoginScreen = ({navigation}:Props) => {
               value={form.password}
               onChangeText={(password)=> setForm({...form, password})}
             />
-            <Text>{JSON.stringify(form, null, 2)}</Text>
+            {/* <Text>{JSON.stringify(form, null, 2)}</Text> */}
             {/* button */}
             <Layout style={[globalStyles.centeredContainer,{marginTop: 30}]}>
                 <Button
