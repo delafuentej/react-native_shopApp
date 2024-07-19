@@ -9,9 +9,15 @@ import { useWindowDimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { globalStyles } from "../../../config/theme/globalStyles";
 import { CustomIcon } from "../../components/ui/CustomIcon";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParams } from "../../navigation/StackNavigator";
 
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {
+
+}
+
+export const LoginScreen = ({navigation}:Props) => {
   const{ height, width } = useWindowDimensions();
   
   return (
@@ -21,7 +27,7 @@ export const LoginScreen = () => {
             <Text category='h1' style={{textAlign:'center'}}>Login</Text>
           </Layout>
           {/* inputs */}
-          <Layout style={{marginTop: 30}}>
+          <Layout style={[globalStyles.centeredContainer,{marginTop: 30}]}>
             <Input 
               placeholder="Email"
               keyboardType='email-address'
@@ -37,14 +43,13 @@ export const LoginScreen = () => {
               accessoryLeft={<CustomIcon name='lock-outline' />}
               style={{marginBottom: 10, width: width * 0.7}}
             />
-            {/* space */}
-            <Layout style={{height: 20}} />
 
             {/* button */}
-            <Layout>
+            <Layout style={[globalStyles.centeredContainer,{marginTop: 30}]}>
                 <Button
                   onPress={()=>{}}
                   accessoryRight={<CustomIcon name='arrow-forward-outline' white/>}
+                  style={{width: width * 0.7}}
                 >
                   Login
                 </Button>
@@ -65,7 +70,7 @@ export const LoginScreen = () => {
               <Text 
                 status='primary'
                 category='s1'
-                onPress={()=>{}}
+                onPress={()=>navigation.navigate('RegisterScreen')}
                 >Create an account</Text>
 
             </Layout>
