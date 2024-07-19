@@ -11,6 +11,7 @@ import { globalStyles } from "../../../config/theme/globalStyles";
 import { CustomIcon } from "../../components/ui/CustomIcon";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParams } from "../../navigation/StackNavigator";
+import { API_URL, STAGE } from "@env";
 
 
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {
@@ -19,6 +20,7 @@ interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {
 
 export const LoginScreen = ({navigation}:Props) => {
   const{ height, width } = useWindowDimensions();
+  console.log({apiUrl: API_URL, stage: STAGE});
   
   return (
     <Layout style={globalStyles.centeredContainer}>
