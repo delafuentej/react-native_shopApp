@@ -7,7 +7,7 @@
 
 // import { useWindowDimensions } from 'react-native';
 import { getProductsByPage } from '../../../actions/products/get-products-by-page';
-import {  useQuery } from '@tanstack/react-query';
+import {  useInfiniteQuery } from '@tanstack/react-query';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Text } from '@ui-kitten/components';
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
@@ -18,10 +18,22 @@ export const HomeScreen = () => {
 
   // const{  width } = useWindowDimensions();
 
-  const {isLoading, data: products = []} = useQuery({
+  // const {isLoading, data: products = []} = useQuery({
+  //   queryKey: ['products','infinite'],
+  //   staleTime: 1000 * 60 * 60, // 1 hour to update changes
+  //   queryFn:() => getProductsByPage(0),
+  // });
+  //USEINFINITEQUERY => INFINITESCROLL OF PRODUCTS
+  const {isLoading, data} = useInfiniteQuery({
     queryKey: ['products','infinite'],
     staleTime: 1000 * 60 * 60, // 1 hour to update changes
-    queryFn:() => getProductsByPage(0),
+    initialPageParam: 0,
+    queryFn: async(params) => {
+      console.log({'params':params});
+      const products = await getProductsByPage(params.pageParam);
+      return products;
+    },
+    getNextPageParam: (lastPage, allPages) => allPages.length,
   });
 
   return(
@@ -32,7 +44,7 @@ export const HomeScreen = () => {
       rightActionIcon='plus-outline'
     >
       {isLoading ? (<FullScreenLoader/>) : (
-       <ProductList products={products}/>
+       <ProductList products={data?.pages.flat() ?? []}/>
       )}
     
 
