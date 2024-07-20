@@ -49,7 +49,7 @@ export const MainLayout = ({title, subTitle, rightAction, rightActionIcon, child
                 // accessoryLeft={renderBackAction}
             />
             <Divider />
-            <Layout style={{height: '100%'}}>
+            <Layout>
                 {children}
             </Layout>
         </Layout>

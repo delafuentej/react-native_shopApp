@@ -5,11 +5,13 @@
 /* eslint-disable react/react-in-jsx-scope */
 
 
-import { useWindowDimensions } from 'react-native';
+// import { useWindowDimensions } from 'react-native';
 import { getProductsByPage } from '../../../actions/products/get-products-by-page';
 import {  useQuery } from '@tanstack/react-query';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Text } from '@ui-kitten/components';
+import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
+import { ProductList } from '../../components/products/ProductList';
 
 
 export const HomeScreen = () => {
@@ -29,8 +31,10 @@ export const HomeScreen = () => {
       rightAction={()=>{}}
       rightActionIcon='plus-outline'
     >
-    {<Text>Welcome</Text>}
-
+      {isLoading ? (<FullScreenLoader/>) : (
+       <ProductList products={products}/>
+      )}
+    
 
   </MainLayout>
   );
