@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import { User } from '../../../domain/entities/user.entity';
 import { AuthStatus } from '../../../infrastructure/interfaces/auth.status';
-import { authLogin } from '../../../actions/auth/auth';
+import { authCheckStatus, authLogin } from '../../../actions/auth/auth';
 import { AsyncStorageAdapter } from '../../../config/adapters/async-storage';
 
 
@@ -11,9 +11,11 @@ export interface AuthState {
     user?: User;
     token?: string;
     login: (email: string, password: string) => Promise<boolean>;
+    checkStatus: () => Promise<void>;
+    logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()((set)=>({
+export const useAuthStore = create<AuthState>()((set, get)=>({
     status: 'checking',
     user: undefined,
     token: undefined,
@@ -27,11 +29,25 @@ export const useAuthStore = create<AuthState>()((set)=>({
         }
         // save token & user in storage: with @react-native-async-storage
         await AsyncStorageAdapter.setItem('token', res.token);
-        const storeToken = await AsyncStorageAdapter.getItem('token');
-        console.log('storeToken', storeToken);
+        // const storedToken = await AsyncStorageAdapter.getItem('token');
+        // console.log('storedToken', storedToken);
 
         set({status:'authenticated', user: res.user, token:res.token});
         return true;
+    },
+    checkStatus: async()=> {
+        const res = await authCheckStatus();
+        if(!res){
+            set({status:'unauthenticated', user: undefined, token:undefined});
+            return;
+        }
+        await AsyncStorageAdapter.setItem('token', res.token);
+        //update by new token when res exists.
+        set({status:'authenticated', user: res.user, token:res.token});
+    },
+    logout: async()=> {
+        await AsyncStorageAdapter.removeItem('token');
+        set({status: 'unauthenticated', user: undefined, token: undefined});
     },
 
 }))

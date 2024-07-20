@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export class AsyncStorageAdapter {
@@ -19,7 +19,7 @@ export class AsyncStorageAdapter {
              await AsyncStorage.setItem(key,value);
         }catch(error){
             console.log(error);
-            throw new Error(`Error setting item ${key}- ${value}`)
+            throw new Error(`Error setting item ${key}- ${value}`);
         }
     }
 
@@ -28,7 +28,7 @@ export class AsyncStorageAdapter {
              await AsyncStorage.removeItem(key);
         }catch(error){
             console.log(error);
-            throw new Error(`Error removing item ${key}`)
+            throw new Error(`Error removing item ${key}`);
         }
     }
 }

@@ -6,25 +6,23 @@
 
 import { Button, Layout, Text, Icon, IconElement} from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+import { CustomIcon } from '../../components/ui/CustomIcon';
+import { useAuthStore } from '../../store/auth/useAuthStore';
 
 
 export const HomeScreen = () => {
 
-  const HomeIcon = (props:any) : IconElement =>(
-    <Icon
-      style={styles.icon}
-      {...props}
-      name='home-outline'
-      />
-  );
+  const { logout } = useAuthStore();
+ 
 
   return(
     <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
     <Text category = 'h1' >HOME</Text>
     {/* <Icon name='home-outline'/> */}
     <Button
-      accessoryLeft={<HomeIcon/>}
-    >Close Session</Button>
+      onPress={logout}
+      accessoryRight={<CustomIcon name='log-out-outline' white/>}
+    >Log out</Button>
   </Layout>
   );
 };

@@ -24,6 +24,7 @@ const returnUserToken = (data : AuthResponses) => {
 };
 
 
+
 export const authLogin = async(email: string, password: string) => {
     email = email.toLowerCase();
     try{
@@ -36,4 +37,15 @@ export const authLogin = async(email: string, password: string) => {
         console.log('EError', error);
         return null;
     }
+};
+
+export const authCheckStatus = async () => {
+    try{
+        const {data} = await shopApi.get<AuthResponses>('/auth/check-status');
+        return returnUserToken(data);
+    }catch(error){
+        console.log(error);
+        return null;
+    }
 }
+

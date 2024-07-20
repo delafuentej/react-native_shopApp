@@ -8,7 +8,7 @@ import { globalStyles } from '../../../config/theme/globalStyles';
 export const LoadingScreen = () => {
   return (
     <Layout style={globalStyles.centeredContainer}>
-      <Spinner status='primary' size='extra-large'/>
+      <Spinner status='primary' size='large'/>
     </Layout>
   );
 };
