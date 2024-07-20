@@ -1,5 +1,12 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+# ShopApp
+## Development
+1. Clone project.
+2. Install dependencies: ```npm install``` / ```yarn install```.
+3. Rename ```.env.template```file to ```.env``` file.
+4. Update environment variables in ```.env```file.
+5. Run the project ```npm start```/ ```yarn start```.
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
