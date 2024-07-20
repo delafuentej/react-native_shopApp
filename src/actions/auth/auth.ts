@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
 // authenticity actions: login, register => http request to have access to the backend
 
@@ -47,5 +49,21 @@ export const authCheckStatus = async () => {
         console.log(error);
         return null;
     }
-}
+};
+
+export const authRegister = async (email: string, password: string, fullName: string) => {
+    email.toLowerCase();
+    fullName.toLowerCase();
+    try {
+        const {data} = await shopApi.post<AuthResponses>('/auth/register',{
+            email,
+            password,
+            fullName,
+        });
+        return returnUserToken(data);
+    }catch(error){
+        console.log(error);
+        throw new Error(`The account could not be created`); 
+    }
+};
 
