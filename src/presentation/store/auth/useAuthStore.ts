@@ -61,7 +61,7 @@ export const useAuthStore = create<AuthState>()((set, get)=>({
          await AsyncStorageAdapter.setItem('token', res.token);
          // const storedToken = await AsyncStorageAdapter.getItem('token');
          // console.log('storedToken', storedToken);
-         set({status:'authenticated', user: res.user, token:res.token});
+         set({status:'unauthenticated', user: res.user, token:res.token});
          return true;
 
     },
