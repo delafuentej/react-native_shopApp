@@ -4,16 +4,17 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/react-in-jsx-scope */
 
-import { Layout, Text} from '@ui-kitten/components';
+
 import { useWindowDimensions } from 'react-native';
-import { useAuthStore } from '../../store/auth/useAuthStore';
 import { getProductsByPage } from '../../../actions/products/get-products-by-page';
 import {  useQuery } from '@tanstack/react-query';
+import { MainLayout } from '../../layouts/MainLayout';
+import { Text } from '@ui-kitten/components';
 
 
 export const HomeScreen = () => {
 
-  const{  width } = useWindowDimensions();
+  // const{  width } = useWindowDimensions();
 
   const {isLoading, data: products = []} = useQuery({
     queryKey: ['products','infinite'],
@@ -21,14 +22,17 @@ export const HomeScreen = () => {
     queryFn:() => getProductsByPage(0),
   });
 
-  const { logout } = useAuthStore();
- 
-
   return(
-    <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    <Text>{JSON.stringify(products, null, 2)}</Text>
-    
-  </Layout>
+    <MainLayout
+      title='shopApi- Products'
+      subTitle='Maintenance Application'
+      rightAction={()=>{}}
+      rightActionIcon='plus-outline'
+    >
+    {<Text>Welcome</Text>}
+
+
+  </MainLayout>
   );
 };
 
