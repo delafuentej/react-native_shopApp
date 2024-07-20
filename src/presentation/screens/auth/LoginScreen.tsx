@@ -43,6 +43,7 @@ export const LoginScreen = ({navigation}:Props) => {
     setIsPosting(true);
     const success = await login(form.email, form.password);
     setIsPosting(false);
+    
     if(success) return;
     Alert.alert('Error', 'User or password are wrong');
   };
