@@ -31,6 +31,7 @@ export const HomeScreen = () => {
     queryFn: async(params) => {
       console.log({'params':params});
       const products = await getProductsByPage(params.pageParam);
+
       //to avoid a product loading when the users clicks on the 
       // product (ProductScreen-  product details); 
       // for the product info to be chached beforehand
