@@ -11,9 +11,9 @@ import { CustomIcon } from "../components/ui/CustomIcon";
 interface Props {
     title: string;
     subTitle?: string;
-    rightAction: () => void;
-    rightActionIcon: () => string;
-    children: React.ReactNode;
+    rightAction?: () => void;
+    rightActionIcon?: () => string;
+    children?: React.ReactNode;
 }
 export const MainLayout = ({title, subTitle, rightAction, rightActionIcon, children}: Props) => {
 
