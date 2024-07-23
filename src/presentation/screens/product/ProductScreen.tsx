@@ -53,14 +53,14 @@ export const ProductScreen = ({route}:Props) => {
      return(<MainLayout title= 'Loading...' />);
    }
    if(!product){
-    return(<MainLayout title={`Product not found by Id: ${productIdRef.current}`}/>)
+    return(<MainLayout title={`Product not found by Id: ${productIdRef.current}`}/>);
    }
   return(
-    <ScrollView  style={{flex: 1}}>
-    <MainLayout
+    <MainLayout 
       title={product?.title}
       subTitle={`Price: $: ${product?.price}`}
     >
+    <ScrollView style={{flex: 1}} >
     
     <Layout>
    
@@ -163,8 +163,8 @@ export const ProductScreen = ({route}:Props) => {
     </Layout>
       
 
-    </MainLayout>
     </ScrollView>
+    </MainLayout>
 
     );
 };

@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Divider, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomIcon } from "../components/ui/CustomIcon";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 interface Props {
@@ -49,9 +50,9 @@ export const MainLayout = ({title, subTitle, rightAction, rightActionIcon, child
                 // accessoryLeft={renderBackAction}
             />
             <Divider />
-           
+           <ScrollView>
                 {children}
-           
+            </ScrollView>
         </Layout>
     );
 }

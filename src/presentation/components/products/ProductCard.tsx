@@ -37,9 +37,9 @@ export const ProductCard = ({ product } : Props) => {
 
         </Card>
     );
-}
+};
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     cardContainer: {
         flex:1,
         backgroundColor:'#f9f9f9',
@@ -50,6 +50,6 @@ const styles= StyleSheet.create({
         height:200,
     },
     cardTitle: {
-        textAlign:'center'
-    }
+        textAlign:'center',
+    },
 })
