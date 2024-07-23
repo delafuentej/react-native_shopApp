@@ -1,11 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable prettier/prettier */
-import { Card, Text } from "@ui-kitten/components";
-import { Product } from "../../../domain/entities/product.entity";
-import { Image, StyleSheet } from "react-native";
-import { FadeInImage } from "../ui/FadeInImage";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParams } from "../../navigation/StackNavigator";
+import { Card, Text } from '@ui-kitten/components';
+import { Product } from '../../../domain/entities/product.entity';
+import { Image, StyleSheet } from 'react-native';
+import { FadeInImage } from '../ui/FadeInImage';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParams } from '../../navigation/StackNavigator';
 
 interface Props {
     product: Product;
@@ -13,6 +13,7 @@ interface Props {
 
 export const ProductCard = ({ product } : Props) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
+
 
     return(
         <Card 

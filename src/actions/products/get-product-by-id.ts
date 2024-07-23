@@ -9,11 +9,13 @@ import { ProductMapper } from "../../infrastructure/mappers/product.mapper";
 export const getProductsById = async( id: string): Promise<Product> => {
     
     try{
-        const { data } = await shopApi.get<ProductsResponse>(`/products/${id}`)
+        const { data } = await shopApi.get<ProductsResponse>(`/products/${id}`);
+        console.log('data-getProductById', data);
         // const products =  data.map( product => ProductMapper.productToEntity(product));
-        const product =  ProductMapper.productToEntity(data);
+        // const product =  ProductMapper.productToEntity(data);
         // console.log('products', products);
-        return product;
+        // return product;
+        return ProductMapper.productToEntity(data);
     }catch(error){
         console.log('error getting products', error);
         throw new Error(`Error getting product by  Id:${id}`);

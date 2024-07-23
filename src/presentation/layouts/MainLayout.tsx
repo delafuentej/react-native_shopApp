@@ -33,7 +33,7 @@ export const MainLayout = ({title, subTitle, rightAction, rightActionIcon, child
         return(
             <TopNavigationAction 
                 onPress={rightAction}
-                icon={<CustomIcon name={rightActionIcon}/>}
+                icon={<CustomIcon name={rightActionIcon} />}
             />
         );
     };
@@ -49,9 +49,9 @@ export const MainLayout = ({title, subTitle, rightAction, rightActionIcon, child
                 // accessoryLeft={renderBackAction}
             />
             <Divider />
-            <Layout>
+           
                 {children}
-            </Layout>
+           
         </Layout>
     );
 }

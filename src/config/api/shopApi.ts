@@ -9,12 +9,11 @@ export const API_URL = (STAGE === 'prod') ? PROD_URL :
 
     // console.log('android',API_URL_ANDROID);
     // console.log('ios',API_URL_IOS);
-const shopApi = axios.create({
+export const shopApi = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
-   
 });
 // console.log('API_URL',API_URL);
 // Interceptors => to help read the storage of the physical device and attach the access token.
@@ -22,7 +21,6 @@ const shopApi = axios.create({
         async(config) =>{
         // to verify the storage:
         const token = await AsyncStorageAdapter.getItem('token');
-        
         if(token){
             config.headers['Authorization'] = `Bearer ${token}`;
         }
@@ -30,6 +28,3 @@ const shopApi = axios.create({
         }
     );
 
-export {
-    shopApi,
-}

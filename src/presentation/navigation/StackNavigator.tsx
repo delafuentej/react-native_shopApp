@@ -13,7 +13,7 @@ export type RootStackParams = {
     LoginScreen: undefined;
     RegisterScreen: undefined;
     HomeScreen: undefined;
-    ProductScreen: {productId: string};
+    ProductScreen: { productId : string};
 
 }
 
@@ -30,7 +30,7 @@ const fadeAnimation : StackCardStyleInterpolator = ({current}) => {
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
-    initialRouteName='LoadingScreen'
+    initialRouteName='HomeScreen'
     screenOptions={{
       headerShown: false,
       // cardStyleInterpolator: fadeAnimation,

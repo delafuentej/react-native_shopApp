@@ -36,14 +36,14 @@ export const RegisterScreen = ({navigation}: Props) => {
     setIsPosting(true);
     const success = await register(form.email,form.password,form.fullName);
     setIsPosting(false);
-    if(success) {
-      Alert.alert('Account created', 'Your account was successfully created');
-      navigation.goBack();
-    }
-   if(!success){
+    if(success) return;
+    //   { 
+    //    Alert.alert('Account created', 'Your account was successfully created');
+    //    navigation.goBack();
+    // }
+
       Alert.alert('Error', 'Account could not be created');
-      navigation.goBack();
-   }
+
 
   };
 

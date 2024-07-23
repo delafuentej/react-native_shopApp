@@ -37,9 +37,9 @@ export const App = () => {
                 notification: theme['color-primary-500'],
               },
             }}>
-              <AuthProvider>
+              {/* <AuthProvider> */}
                 <StackNavigator />
-              </AuthProvider>
+              {/* </AuthProvider> */}
             </NavigationContainer>
         </ApplicationProvider>
      

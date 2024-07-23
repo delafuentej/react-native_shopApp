@@ -5,6 +5,7 @@ import { Product } from "../../../domain/entities/product.entity";
 import { ProductCard } from "./ProductCard";
 import { useState } from "react";
 import { RefreshControl } from "react-native";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
     products: Product[];
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const ProductList = ({products, fetchNextPage}:Props) => {
+    const queryClient = useQueryClient();
     const [ isRefreshing, setIsRefreshing ] = useState(false);
 
     // onPullToRefresh =>to update the data
@@ -20,8 +22,9 @@ export const ProductList = ({products, fetchNextPage}:Props) => {
         setIsRefreshing(true);
         // sleep 2 seconds
         await new Promise(resolve => setTimeout(resolve, 2000));
+        queryClient.invalidateQueries({queryKey: ['products','infinite']});
         setIsRefreshing(false);
-    }
+    };
     return( 
         <List
             data={products}

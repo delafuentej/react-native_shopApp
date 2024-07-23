@@ -16,7 +16,7 @@ export class AsyncStorageAdapter {
 
     static async setItem (key: string, value: string): Promise<void>{
         try{
-             await AsyncStorage.setItem(key,value);
+             await AsyncStorage.setItem(key, value);
         }catch(error){
             console.log(error);
             throw new Error(`Error setting item ${key}- ${value}`);
