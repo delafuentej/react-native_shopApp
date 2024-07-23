@@ -16,6 +16,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import { FadeInImage } from '../../components/ui/FadeInImage';
 import { Gender, Size } from '../../../domain/entities/product.entity';
 import { CustomIcon } from '../../components/ui/CustomIcon';
+import { Formik } from 'formik';
 
 
 const sizes: Size[] = [Size.S, Size.M, Size.L, Size.Xs, Size.Xl, Size.Xxl];
@@ -56,116 +57,146 @@ export const ProductScreen = ({route}:Props) => {
     return(<MainLayout title={`Product not found by Id: ${productIdRef.current}`}/>);
    }
   return(
-    <MainLayout 
-      title={product?.title}
-      subTitle={`Price: $: ${product?.price}`}
+    <Formik
+      initialValues={product}
+      onSubmit={values => console.log('values', values)}
     >
-    <ScrollView style={{flex: 1}} >
-    
-    <Layout>
-   
-      {/* product images */}
-       <Layout>
-        <FlatList 
-          data={product.images}
-          horizontal
-          keyExtractor={(item) => item}
-          showsHorizontalScrollIndicator={false}
-          renderItem={ ({item}) => (
-            <FadeInImage 
-              style={styles.imgContainer}
-              uri={item}
+      {({handleChange, handleSubmit, values, errors, setFieldValue}) => (
+          <MainLayout 
+          // title={product?.title}
+          // subTitle={`Price: $: ${product?.price}`}
+          title={values.title}
+          subTitle={`Price: $: ${values.price}`}
+        >
+
+        <ScrollView style={{flex: 1}} >
+        
+        <Layout>
+       
+          {/* product images */}
+           <Layout>
+            <FlatList 
+              data={values.images}
+              // data={product.images}
+              horizontal
+              keyExtractor={(item) => item}
+              showsHorizontalScrollIndicator={false}
+              renderItem={ ({item}) => (
+                <FadeInImage 
+                  style={styles.imgContainer}
+                  uri={item}
+                />
+              )}
             />
-          )}
-        />
-      </Layout> 
-      {/* form: title, slug, and description*/}
-
-      <Layout style={styles.space}>
-        <Input
-          label='Title'
-          value={product.title}
-          style={{marginVertical: 5}}
-        />
-        <Input
-          label='Slug'
-          value={product.slug}
-          style={{marginVertical: 5}}
-        />
-        <Input
-          label='Description'
-          value={product.description}
-          multiline
-          numberOfLines={5}
-          style={{marginVertical: 5}}
-        />
-      </Layout>
-
-        {/* form: price & stock */}
-      <Layout style={[styles.space, {flexDirection:'row', gap: 10}]}>
-
-      <Input
-          label='Price'
-          value={product.price.toString()}
-          style={{flex: 1}}
-        />
-        <Input
-          label='Stock'
-          value={product.stock.toString()}
-          style={{flex: 1}}
-        />
-      </Layout>
-
-      {/* Selectors: sizes & genders */}
-      <ButtonGroup 
-        size='small'
-        appearance='outline'
-        style={[styles.space, styles.selectorsContainer]}>
-        {sizes.map( (size) =>
-           <Button 
-            style={{ 
-              flex: 1, 
-              backgroundColor: true ? theme['color-primary-200'] : undefined,
-            }}
-            key={size}>{size}</Button>)
-        
-        }
-
-
-      </ButtonGroup>
-
-      <ButtonGroup 
-        size='small'
-        appearance='outline'
-        style={[styles.space, styles.selectorsContainer]}>
-        {genders.map( (gender) =>
-           <Button 
-            style={{ 
-              flex: 1, 
-              backgroundColor: true ? theme['color-primary-200'] : undefined,
-            }}
-            key={gender}>{gender}</Button>)
-        
-        }
-
-
-      </ButtonGroup>
-
-      {/* save button */}
-      <Button
-        style={{margin: 15}}
-        accessoryLeft={<CustomIcon name='save-outline' white />}
-        onPress={()=>{}}
-      >
-          Save
-      </Button>
-
-    </Layout>
-      
-
-    </ScrollView>
-    </MainLayout>
-
+          </Layout> 
+          {/* form: title, slug, and description*/}
+    
+          <Layout style={styles.space}>
+            <Input
+              label='Title'
+              // value={product.title}
+              style={{marginVertical: 5}}
+              value={values.title}
+              onChangeText={handleChange('title')}
+            />
+            <Input
+              label='Slug'
+              // value={product.slug}
+              style={{marginVertical: 5}}
+              value={values.slug}
+              onChangeText={handleChange('slug')}
+            />
+            <Input
+              label='Description'
+              // value={product.description}
+              multiline
+              numberOfLines={5}
+              style={{marginVertical: 5}}
+              value={values.description}
+              onChangeText={handleChange('description')}
+            />
+          </Layout>
+    
+            {/* form: price & stock */}
+          <Layout style={[styles.space, {flexDirection:'row', gap: 10}]}>
+    
+          <Input
+              label='Price'
+              // value={product.price.toString()}
+              style={{flex: 1}}
+              value={values.price.toString()}
+              onChangeText={handleChange('price')}
+            />
+            <Input
+              label='Stock'
+              // value={product.stock.toString()}
+              style={{flex: 1}}
+              value={values.stock.toString()}
+              onChangeText={handleChange('stock')}
+            />
+          </Layout>
+    
+          {/* Selectors: sizes & genders */}
+          <ButtonGroup 
+            size='small'
+            appearance='outline'
+            style={[styles.space, styles.selectorsContainer]}>
+            {sizes.map( (size) =>
+               <Button 
+                onPress = { ()=> setFieldValue(
+                  'sizes', 
+                  values.sizes.includes(size) ? values.sizes.filter( s => s !== size) :
+                  [...values.sizes, size]
+                ) 
+                }
+                style={{ 
+                  flex: 1, 
+                  backgroundColor: values.sizes.includes(size) ? theme['color-primary-200'] : undefined,
+                }}
+                key={size}>{size}</Button>)
+            
+            }
+    
+    
+          </ButtonGroup>
+    
+          <ButtonGroup 
+            size='small'
+            appearance='outline'
+            style={[styles.space, styles.selectorsContainer]}>
+            {genders.map( (gender) =>
+               <Button 
+                onPress={()=> setFieldValue('gender', gender)}
+                style={{ 
+                  flex: 1, 
+                  backgroundColor: values.gender.startsWith(gender) ? theme['color-primary-200'] : undefined,
+                }}
+                key={gender}>{gender}</Button>)
+            
+            }
+    
+    
+          </ButtonGroup>
+    
+          {/* save button */}
+          <Button
+            style={{margin: 15}}
+            accessoryLeft={<CustomIcon name='save-outline' white />}
+            onPress={()=>{}}
+          >
+              Save
+          </Button>
+          <Text>{JSON.stringify(values, null, 2)}</Text>
+    
+        </Layout>
+          
+    
+        </ScrollView>
+        </MainLayout>
+        )
+      }
+   
+    </Formik>
     );
 };
 
