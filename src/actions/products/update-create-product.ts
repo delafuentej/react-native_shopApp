@@ -17,10 +17,34 @@ export const updateCreateProduct = (product: Partial<Product>)=> {
     }
     return  createProduct(product);
 };
-const prepareImgs = (imgs: string[]) => {
-    return imgs.map(
+const prepareImgs = async(imgs: string[]) => {
+
+    const fileImages = imgs.filter( img => img.includes('file://'));
+    const currentImages = imgs.filter( img => !img.includes('file://'));
+
+    if(fileImages.length > 0){
+        const uploadPromises = fileImages.map( img => uploadImg(img));
+        const uploadedImgs = await Promise.all(uploadPromises);
+        currentImages.push(...uploadedImgs);
+    }
+    return currentImages.map(
         img => img.split('/').pop()
     );
+};
+
+const uploadImg = async(imgUri: string) =>{
+    const formData = new FormData();
+    formData.append('file', {
+        uri: imgUri,
+        type: 'image/jpeg',
+        name: imgUri.split('/').pop(),
+    });
+    const {data} = await shopApi.post<{ imgUri : string}>('/files/product', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return data.imgUri;
 };
 
 const updateProduct = async(product: Partial<Product>) => {
@@ -28,7 +52,7 @@ const updateProduct = async(product: Partial<Product>) => {
     const {id, images = [], ...rest} = product;
 
     try{
-        const checkedImgs = prepareImgs(images);
+        const checkedImgs = await prepareImgs(images);
         console.log('checkedImgs', checkedImgs);
     
         const {data} = await shopApi.patch(`/products/${id}`, {
@@ -51,7 +75,7 @@ const createProduct = async(product : Partial<Product>)  =>{
     const {id, images = [], ...rest} = product;
 
     try{
-        const checkedImgs = prepareImgs(images);
+        const checkedImgs = await prepareImgs(images);
         
         const {data} = await shopApi.post(`/products/`, {
             images: checkedImgs,

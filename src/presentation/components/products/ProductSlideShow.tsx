@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
 

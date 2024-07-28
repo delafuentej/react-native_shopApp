@@ -22,6 +22,7 @@ export const ProductList = ({products, fetchNextPage}:Props) => {
         setIsRefreshing(true);
         // sleep 2 seconds
         await new Promise(resolve => setTimeout(resolve, 200));
+        //to invalidate cache :
         queryClient.invalidateQueries({queryKey: ['products','infinite']});
         setIsRefreshing(false);
     };

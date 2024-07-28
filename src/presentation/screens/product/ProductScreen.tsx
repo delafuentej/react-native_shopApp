@@ -11,18 +11,19 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
 import { MainLayout } from '../../layouts/MainLayout';
-import { Button, ButtonGroup, Input, Layout, useTheme } from '@ui-kitten/components';
+import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Gender, Product, Size } from '../../../domain/entities/product.entity';
+import {  Product } from '../../../domain/entities/product.entity';
 import { CustomIcon } from '../../components/ui/CustomIcon';
 import { getProductsById, updateCreateProduct} from '../../../actions/products';
 import { Formik } from 'formik';
 
 import { ProductSlideShow } from '../../components/products/ProductSlideShow';
+import { genders, sizes } from '../../../config/constants/constants';
+import { CameraAdapter } from '../../../config/adapters/camera-adapter';
 
 
-const sizes: Size[] = [Size.S, Size.M, Size.L, Size.Xs, Size.Xl, Size.Xxl];
-const genders : Gender[] = [Gender.Unisex, Gender.Kid, Gender.Men, Gender.Women]
+
 
 
 
@@ -92,6 +93,12 @@ export const ProductScreen = ({route}:Props) => {
           // subTitle={`Price: $: ${product?.price}`}
           title={values.title}
           subTitle={`Price: $: ${values.price}`}
+          rightAction={async()=>{
+            const photos = await CameraAdapter.getPicturesFromLibrary();
+            console.log({photos});
+            setFieldValue('images', [...values.images, ...photos]);
+          }}
+          rightActionIcon='image-outline'
         >
 
         <ScrollView style={{flex: 1}} >
@@ -225,6 +232,8 @@ export const ProductScreen = ({route}:Props) => {
           >
               Save
           </Button>
+
+          <Text>{JSON.stringify(values,null,2)}</Text>
         </ScrollView>
         </MainLayout>
         )
