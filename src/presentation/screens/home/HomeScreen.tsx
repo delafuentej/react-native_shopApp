@@ -9,14 +9,20 @@
 import { getProductsByPage } from '../../../actions/products/get-products-by-page';
 import {  useInfiniteQuery } from '@tanstack/react-query';
 import { MainLayout } from '../../layouts/MainLayout';
-import { Text } from '@ui-kitten/components';
+
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
 import { ProductList } from '../../components/products/ProductList';
-import { useNavigation } from '@react-navigation/native';
+import { FAB } from '../../components/ui/FAB';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../navigation/StackNavigator';
 
 
+
+
+
 export const HomeScreen = () => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   // const {isLoading, data: products = []} = useQuery({
   //   queryKey: ['products','infinite'],
@@ -46,21 +52,25 @@ export const HomeScreen = () => {
   });
 
   return(
-    <MainLayout
-      title='shopApi- Products'
-      subTitle='Maintenance Application'
-      rightAction={()=>{}}
-      rightActionIcon='plus-outline'
-    >
-      {isLoading ? (<FullScreenLoader/>) : (
-       <ProductList 
-        products={data?.pages.flat() ?? []}
-        fetchNextPage= {fetchNextPage}
-        />
-      )}
-    
+    <>
+      <MainLayout
+        title='shopApi- Products'
+        subTitle='Maintenance Application'
+      >
+        {isLoading ? (<FullScreenLoader/>) : (
+        <ProductList
+          products={data?.pages.flat() ?? []}
+          fetchNextPage= {fetchNextPage}
+          />
+        )}
 
-  </MainLayout>
+    </MainLayout>
+    <FAB 
+      style={{ position: 'absolute', bottom:30, right: 20}} 
+      iconName='plus-outline' 
+      onPress={()=>navigation.navigate('ProductScreen', {productId: 'new'})}
+      />
+    </>
   );
 };
 

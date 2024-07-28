@@ -9,7 +9,7 @@ import { MainLayout } from '../../layouts/MainLayout';
 import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FlatList, StyleSheet } from 'react-native';
@@ -48,7 +48,7 @@ export const ProductScreen = ({route}:Props) => {
   // to keep the productId as reference => to update and modify products on the same screen
    //const productIdRef = useRef(route.params.productId);
 
-   const { isLoading, data:product} = useQuery({
+   const { isLoading, data:product, error} = useQuery({
      queryKey: ['product', productIdRef.current],
      queryFn: () => getProductsById(productIdRef.current),
    });
@@ -66,6 +66,10 @@ export const ProductScreen = ({route}:Props) => {
         
       },
    });
+
+   useEffect(()=>{
+    console.log(error);
+   },[error]);
 
    if(isLoading){
      return(<MainLayout title= 'Loading...' />);
@@ -235,5 +239,5 @@ const styles = StyleSheet.create({
   },
   space: {
     marginHorizontal:15,
-  }
+  },
 });

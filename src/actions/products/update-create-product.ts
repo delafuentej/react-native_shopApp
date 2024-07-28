@@ -33,7 +33,7 @@ const updateProduct = async(product: Partial<Product>) => {
 
     }catch(error){
         if(isAxiosError(error)){
-            console.log(error.response?.data);
+            console.log('Error Update Axios', error.response?.data);
         }
         console.log(error);
         throw new Error(`Cannot update product with id: ${id}`);

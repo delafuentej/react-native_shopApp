@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/react-in-jsx-scope */
-import { Layout, List } from "@ui-kitten/components";
-import { Product } from "../../../domain/entities/product.entity";
-import { ProductCard } from "./ProductCard";
-import { useState } from "react";
-import { RefreshControl } from "react-native";
-import { useQueryClient } from "@tanstack/react-query";
+import { Layout, List } from '@ui-kitten/components';
+import { Product } from '../../../domain/entities/product.entity';
+import { ProductCard } from './ProductCard';
+import { useState } from 'react';
+import { RefreshControl } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
     products: Product[];
@@ -25,7 +25,7 @@ export const ProductList = ({products, fetchNextPage}:Props) => {
         queryClient.invalidateQueries({queryKey: ['products','infinite']});
         setIsRefreshing(false);
     };
-    return( 
+    return(
         <List
             data={products}
             numColumns={2}
