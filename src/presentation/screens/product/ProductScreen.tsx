@@ -4,20 +4,21 @@
 /* eslint-disable eol-last */
 /* eslint-disable react/react-in-jsx-scope */
 
-import { getProductsById } from '../../../actions/products/get-product-by-id';
-import { MainLayout } from '../../layouts/MainLayout';
-import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
+
+import {  useRef } from 'react';
+import {  StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
-import {  useRef } from 'react';
+import { MainLayout } from '../../layouts/MainLayout';
+import { Button, ButtonGroup, Input, Layout, useTheme } from '@ui-kitten/components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ScrollView } from 'react-native-gesture-handler';
-import { FlatList, Image, StyleSheet } from 'react-native';
-import { FadeInImage } from '../../components/ui/FadeInImage';
 import { Gender, Product, Size } from '../../../domain/entities/product.entity';
 import { CustomIcon } from '../../components/ui/CustomIcon';
+import { getProductsById, updateCreateProduct} from '../../../actions/products';
 import { Formik } from 'formik';
-import { updateCreateProduct } from '../../../actions/products/update-create-product';
+
+import { ProductSlideShow } from '../../components/products/ProductSlideShow';
 
 
 const sizes: Size[] = [Size.S, Size.M, Size.L, Size.Xs, Size.Xl, Size.Xxl];
@@ -97,8 +98,9 @@ export const ProductScreen = ({route}:Props) => {
         
         <Layout style={styles.centeredImg}>
        
-          {/* product images */}
-          {
+          {/* product images : refactoring code*/}
+          <ProductSlideShow images={values.images}/>
+          {/* {
 
             (values.images.length === 0) ? 
               <Image 
@@ -120,7 +122,7 @@ export const ProductScreen = ({route}:Props) => {
                   )}
                 />
                 )
-          }
+          } */}
            
           </Layout> 
           {/* form: title, slug, and description*/}
@@ -223,11 +225,6 @@ export const ProductScreen = ({route}:Props) => {
           >
               Save
           </Button>
-          <Text>{JSON.stringify(values, null, 2)}</Text>
-    
-   
-          
-    
         </ScrollView>
         </MainLayout>
         )
@@ -242,11 +239,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  imgContainer: {
-    width: 300,
-    height: 300,
-    marginHorizontal: 7,
   },
   selectorsContainer: {
     margin:2, 
