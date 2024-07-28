@@ -9,10 +9,10 @@ import { MainLayout } from '../../layouts/MainLayout';
 import { Button, ButtonGroup, Input, Layout, Text, useTheme } from '@ui-kitten/components';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNavigator';
-import { useEffect, useRef } from 'react';
+import {  useRef } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ScrollView } from 'react-native-gesture-handler';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, Image, StyleSheet } from 'react-native';
 import { FadeInImage } from '../../components/ui/FadeInImage';
 import { Gender, Product, Size } from '../../../domain/entities/product.entity';
 import { CustomIcon } from '../../components/ui/CustomIcon';
@@ -67,9 +67,9 @@ export const ProductScreen = ({route}:Props) => {
       },
    });
 
-   useEffect(()=>{
-    console.log(error);
-   },[error]);
+  //  useEffect(()=>{
+  //   console.log(error);
+  //  },[error]);
 
    if(isLoading){
      return(<MainLayout title= 'Loading...' />);
@@ -95,23 +95,33 @@ export const ProductScreen = ({route}:Props) => {
 
         <ScrollView style={{flex: 1}} >
         
-        <Layout>
+        <Layout style={styles.centeredImg}>
        
           {/* product images */}
-           <Layout>
-            <FlatList 
-              data={values.images}
-              // data={product.images}
-              horizontal
-              keyExtractor={(item) => item}
-              showsHorizontalScrollIndicator={false}
-              renderItem={ ({item}) => (
-                <FadeInImage 
-                  style={styles.imgContainer}
-                  uri={item}
+          {
+
+            (values.images.length === 0) ? 
+              <Image 
+                source={require('../../../assets/no-product-image.png')} 
+                style={{height: 300, width: 300}}
                 />
-              )}
-            />
+                : (
+                  <FlatList 
+                  data={values.images}
+                  // data={product.images}
+                  horizontal
+                  keyExtractor={(item) => item}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={ ({item}) => (
+                    <FadeInImage 
+                      style={styles.imgContainer}
+                      uri={item}
+                    />
+                  )}
+                />
+                )
+          }
+           
           </Layout> 
           {/* form: title, slug, and description*/}
     
@@ -215,7 +225,7 @@ export const ProductScreen = ({route}:Props) => {
           </Button>
           <Text>{JSON.stringify(values, null, 2)}</Text>
     
-        </Layout>
+   
           
     
         </ScrollView>
@@ -228,6 +238,11 @@ export const ProductScreen = ({route}:Props) => {
 };
 
 const styles = StyleSheet.create({
+  centeredImg: {
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   imgContainer: {
     width: 300,
     height: 300,
